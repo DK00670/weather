@@ -8,27 +8,23 @@ from .forms import CityForm
 
 def index(request):
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=c03afaccd8030b3947fc03cfeb3501f0'
-    err_msg = ''
     if request.method == 'POST':
         form = CityForm(request.POST)
-    else:
-        form = CityForm(request.GET)
-    
-    if form.is_valid():
-        new_city = form.cleaned_data['name']
-        existing_city_count = City.objects.filter(name=new_city).count()
-        if existing_city_count == 0:
-            r = requests.get(url.format(new_city)).json()
-            if r['cod'] == 200:
-                form.save()
-                list(messages.get_messages(request))
-                messages.success(request, 'City added successfully!')
+        if form.is_valid():
+            new_city = form.cleaned_data['name']
+            existing_city_count = City.objects.filter(name=new_city).count()
+            if existing_city_count == 0:
+                r = requests.get(url.format(new_city)).json()
+                if r['cod'] == 200:
+                    form.save()
+                    list(messages.get_messages(request))
+                    messages.success(request, 'City added successfully!')
+                else:
+                    list(messages.get_messages(request))
+                    messages.error(request, 'City does not exist in the world!')
             else:
                 list(messages.get_messages(request))
-                messages.error(request, 'City does not exist in the world!')
-        else:
-            list(messages.get_messages(request))
-            messages.error(request, 'City already exists in the list!')
+                messages.error(request, 'City already exists in the list!')
 
     
     form = CityForm()
