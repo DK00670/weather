@@ -28,7 +28,13 @@ def index(request):
             message_class = 'is-danger'
         else:
             message = 'City added Successfully!'
-            message_class = 'is_success'
+            message_class = 'is-success'
+            
+    city_deleted_message = ''
+    if City.objects.count() == dic["previous_city_count"] - 1:
+        city_deleted_message = 'Succesfully deleted '
+        message_class = 'is-success'
+    dic["previous_city_count"] = City.objects.count()
     
     form = CityForm()
     cities = City.objects.all()
