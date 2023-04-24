@@ -62,4 +62,4 @@ def index(request):
 def delete_city(requests, city_name):
     dic["deleted_city_name"] = city_name
     City.objects.get(name=city_name).delete()
-    return redirect('home')
+    return redirect('index')
