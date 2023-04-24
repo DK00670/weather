@@ -45,6 +45,12 @@
                             <div>{{ message }}</div>
                         </div>
                     {% endif %}
+                    {% if city_deleted_message %}
+                    <div class="notification {{ message_class }}">
+                        <button class="delete"></button>
+                        <div>{{ city_deleted_message }} {{deleted_city_name}}</div>
+                    </div>
+                    {% endif %}
                 </form>
             </div>
         </div>
