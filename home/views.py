@@ -57,7 +57,7 @@ def index(request):
         'city_deleted_message': city_deleted_message,
         'deleted_city_name': dic["deleted_city_name"],
         }
-    return render(request,'main/index.html', context)
+    return render(request,'home/index.html', context)
 
 def delete_city(requests, city_name):
     dic["deleted_city_name"] = city_name
